@@ -6,15 +6,16 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.loc.newsapp.domain.usecases.AppEntryUseCases
 
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
     private val appEntryUseCases: AppEntryUseCases
 ) : ViewModel()
 {
-    fun onEvent(event: OnBoardingEvent) {
+    suspend fun onEvent(event: OnBoardingEvent) {
         when (event) {
-            is UsageEvents.Event.OnBoardingCompleted -> {
+            is OnBoardingEvent.OnBoardingCompleted -> {
                 appEntryUseCases.saveAppEntry()
             }
         }
@@ -23,7 +24,6 @@ class OnBoardingViewModel @Inject constructor(
     private fun saveAppEntry() {
         viewModelScope.launch {
             appEntryUseCases.saveAppEntry()
-
         }
-    }
-}
+
+    }}
