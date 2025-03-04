@@ -1,6 +1,5 @@
 package com.loc.newsapp.presentation.onboarding
 
-import android.app.usage.UsageEvents
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,8 +10,7 @@ import com.loc.newsapp.domain.usecases.AppEntryUseCases
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
     private val appEntryUseCases: AppEntryUseCases
-) : ViewModel()
-{
+) : ViewModel() {
     suspend fun onEvent(event: OnBoardingEvent) {
         when (event) {
             is OnBoardingEvent.OnBoardingCompleted -> {
@@ -26,4 +24,5 @@ class OnBoardingViewModel @Inject constructor(
             appEntryUseCases.saveAppEntry()
         }
 
-    }}
+    }
+}
