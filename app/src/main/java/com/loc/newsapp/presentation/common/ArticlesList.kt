@@ -16,9 +16,9 @@ import com.loc.newsapp.presentation.Dimensions.extraSmallPadding2
 
 @Composable
 fun ArticlesList(
-    modifier: Modifier = Modifier,
-    articles: LazyPagingItems<Article>, // Keep only this parameter
-    onClick: (Article) -> Unit
+modifier: Modifier = Modifier,
+articles: LazyPagingItems<Article>,
+onClick: (Article) -> Unit
 ) {
     val handlePagingResult = handlePagingResultItems(article = articles)
     if (handlePagingResult) {
@@ -28,8 +28,8 @@ fun ArticlesList(
             contentPadding = PaddingValues(all = extraSmallPadding2)
         ) {
             items(count = articles.itemCount) {
-                articles[it]?.let { article ->
-                    ArticleCard(article = article, onClick = { onClick(article) })
+                articles[it]?.let {
+                    ArticleCard(article = it, onClick = { onClick(it) })
                 }
             }
         }

@@ -1,9 +1,11 @@
 package com.loc.newsapp.data.remote
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.loc.newsapp.domain.model.Article
 import com.loc.newsapp.BuildConfig
+import retrofit2.HttpException
 
 class NewPagingSource(
     private val newsApi: NewsApi,
@@ -14,6 +16,7 @@ class NewPagingSource(
         val page = params.key ?: 1
         return try {
             val apiKey = BuildConfig.NEWS_API_KEY
+            Log.d("API_CALL", "page: $page, apiKey: $apiKey, sources: $sources")
             val response = newsApi.getNews(sources, apiKey, page)
             totalNewsCount += response.articles.size
             val articles = response.articles.distinctBy { it.title }
@@ -22,6 +25,9 @@ class NewPagingSource(
                 prevKey = if (page == 1) null else page - 1,
                 nextKey = if (totalNewsCount == response.totalResults) null else page + 1
             )
+        } catch (e: HttpException) {
+            Log.e("API_CALL_ERROR", "HTTP ${e.code()}: ${e.message()}")
+            LoadResult.Error(e)
         } catch (e: Exception) {
             e.printStackTrace()
             LoadResult.Error(e)

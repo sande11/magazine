@@ -20,7 +20,6 @@ fun NavGraph(startDestination: String, navController: NavHostController) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = startDestination) {
-        // Group onboarding-related screens
         navigation(
             route = Route.AppStartNavigation.route,
             startDestination = Route.OnBoardingScreen.route
