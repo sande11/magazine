@@ -17,18 +17,22 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.loc.newsapp.presentation.common.NewsButton
 import com.loc.newsapp.presentation.common.NewsTextButton
+import com.loc.newsapp.presentation.nvgraph.Route
 import com.loc.newsapp.presentation.onboarding.components.OnBoardingPage
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-@OptIn (ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnBoardingScreen(
     event: (OnBoardingEvent) -> Job,
-    modifier: Modifier = Modifier.fillMaxSize()) {
+    navController: NavController,
+    modifier: Modifier = Modifier.fillMaxSize()
+) {
     val pagerState = rememberPagerState(initialPage = 0) { pages.size }
     val scope = rememberCoroutineScope()
 
@@ -54,7 +58,7 @@ fun OnBoardingScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding( start = 16.dp, end = 16.dp, bottom = 40.dp)
+                .padding(start = 16.dp, end = 16.dp, bottom = 40.dp)
                 .align(Alignment.BottomCenter),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -76,9 +80,11 @@ fun OnBoardingScreen(
                     scope.launch {
                         if (pagerState.currentPage < pages.lastIndex) {
                             pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                            event(OnBoardingEvent.SaveAppEntry)
                         } else {
-                            // Navigate to the next screen
+                            event(OnBoardingEvent.OnBoardingCompleted)
+                            navController.navigate(Route.NewsNavigatorScreen.route) {
+                                popUpTo(Route.OnBoardingScreen.route) { inclusive = true }
+                            }
                         }
                     }
                 }
@@ -86,5 +92,4 @@ fun OnBoardingScreen(
         }
     }
 }
-
 
