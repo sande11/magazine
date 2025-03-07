@@ -31,7 +31,11 @@ import com.loc.newsapp.presentation.common.SearchBar
 import com.loc.newsapp.presentation.nvgraph.Route
 
 @Composable
-fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
+fun HomeScreen(
+    articles: LazyPagingItems<Article>,
+    navigate: (String) -> Unit,
+    navigateToDetails: (Article) -> Unit
+) {
     val titles by remember {
         derivedStateOf {
             if (articles.itemCount > 10) {
@@ -84,9 +88,11 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
         ArticlesList(
             modifier = Modifier.padding(horizontal = MediumPadding1),
             articles = articles,
-            onClick = {
-                navigate(Route.DetailScreen.route)
+            onClick = { article ->
+                navigate(Route.DetailScreen.createRoute(article))
             }
+
+
         )
     }
 }

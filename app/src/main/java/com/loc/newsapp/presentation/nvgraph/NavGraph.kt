@@ -9,6 +9,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.google.gson.Gson
+import com.loc.newsapp.domain.model.Article
+import com.loc.newsapp.presentation.details.DetailScreen
 import com.loc.newsapp.presentation.home.HomeScreen
 import com.loc.newsapp.presentation.home.HomeViewModel
 import com.loc.newsapp.presentation.onboarding.OnBoardingViewModel
@@ -32,6 +35,22 @@ fun NavGraph(startDestination: String, navController: NavHostController) {
                 )
             }
         }
+        composable(route = Route.DetailScreen.route + "/{article}") { backStackEntry ->
+            val articleJson = backStackEntry.arguments?.getString("article")
+            val article = articleJson?.let { json ->
+                // Convert JSON back to an Article object
+                Gson().fromJson(json, Article::class.java)
+            }
+
+            article?.let {
+                DetailScreen(
+                    article = it,
+                    event = {}, // Pass any event handler if required
+                    navigateUp = { navController.popBackStack() }
+                )
+            }
+        }
+
 
         // Group news-related screens
         navigation(
@@ -41,7 +60,9 @@ fun NavGraph(startDestination: String, navController: NavHostController) {
             composable(route = Route.NewsNavigatorScreen.route) {
                 val viewModel: HomeViewModel = hiltViewModel()
                 val articles = viewModel.news.collectAsLazyPagingItems()
-                HomeScreen(articles = articles, navigate = {})
+                HomeScreen(articles = articles, navigate = { route -> navController.navigate(route) }) { article ->
+                    navController.navigate(Route.DetailScreen.createRoute(article))
+                }
             }
         }
     }
