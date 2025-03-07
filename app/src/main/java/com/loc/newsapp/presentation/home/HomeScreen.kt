@@ -18,6 +18,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
@@ -47,17 +49,19 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
             .padding(top = MediumPadding1)
             .statusBarsPadding()
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_logo),
-            contentDescription = "logo",
+        Text(
+            text = "NEWS",
+            fontSize = 30.sp,
+            fontFamily = FontFamily.Serif,
+            fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .width(150.dp)
-                .height(30.dp)
-                .padding(horizontal = MediumPadding1)
+                .fillMaxWidth()
+                .height(50.dp)
+                .padding(start = 24.dp)
         )
-        Spacer(modifier = Modifier.height(MediumPadding1))
+
         SearchBar(
-            modifier = Modifier.padding( start = 24.dp, end = 24.dp),
+            modifier = Modifier.padding(start = 24.dp, end = 24.dp),
             text = "",
             readOnly = true,
             onValueChange = {},

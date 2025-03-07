@@ -12,16 +12,16 @@ val pages = listOf(
     Page(
         title = "Welcome to NewsApp",
         description = "Get the latest news from around the world",
-        image = R.drawable.onboarding1
+        image = R.drawable.second
     ),
     Page(
         title = "Personalized News",
         description = "Get news that matters to you",
-        image = R.drawable.onboarding2
+        image = R.drawable.first
     ),
     Page(
         title = "Stay Updated",
         description = "Get news updates in real-time",
-        image = R.drawable.onboarding3
+        image = R.drawable.get_started
     )
 )
