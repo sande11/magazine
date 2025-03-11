@@ -11,6 +11,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.gson.Gson
 import com.loc.newsapp.domain.model.Article
+import com.loc.newsapp.presentation.bookmark.BookmarkScreen
+import com.loc.newsapp.presentation.bookmark.BookmarkViewModel
 import com.loc.newsapp.presentation.details.DetailScreen
 import com.loc.newsapp.presentation.home.HomeScreen
 import com.loc.newsapp.presentation.home.HomeViewModel
@@ -65,5 +67,15 @@ fun NavGraph(startDestination: String, navController: NavHostController) {
                 }
             }
         }
+        composable(route = Route.BookmarksScreen.route) {
+            val bookmarkViewModel: BookmarkViewModel = hiltViewModel()
+            BookmarkScreen(
+                state = bookmarkViewModel.state.value,
+                navigateToDetails = { article -> navController.navigate(Route.DetailScreen.createRoute(article)) },
+                onBackClick = { navController.popBackStack() } // Pass the back navigation function
+            )
+        }
     }
-}
+
+    }
+

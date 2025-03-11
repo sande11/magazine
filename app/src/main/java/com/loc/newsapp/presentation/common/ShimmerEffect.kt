@@ -42,7 +42,7 @@ fun Modifier.shimmerEffect() = composed {
 fun ArticleCardShimmerEffect(
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = Modifier) {
+    Row(modifier = Modifier.padding(start = 20.dp)) {
         Box(
             modifier = Modifier
                 .size(Dimensions.ArticleCardSize)

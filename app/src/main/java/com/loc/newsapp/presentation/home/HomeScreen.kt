@@ -2,7 +2,10 @@ package com.loc.newsapp.presentation.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -53,17 +56,32 @@ fun HomeScreen(
             .padding(top = MediumPadding1)
             .statusBarsPadding()
     ) {
-        Text(
-            text = "NEWS",
-            fontSize = 30.sp,
-            fontFamily = FontFamily.Serif,
-            fontWeight = FontWeight.Bold,
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
-                .padding(start = 24.dp)
-        )
+                .padding(horizontal = 24.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "NEWS",
+                fontSize = 30.sp,
+                fontFamily = FontFamily.Serif,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .height(50.dp)
+            )
 
+            Image(
+                painter = painterResource(id = R.drawable.ic_bookmark),
+                contentDescription = "Bookmark",
+                modifier = Modifier
+                    .width(50.dp)
+                    .padding(top = 8.dp)
+                    .clickable {
+                        navigate(Route.BookmarksScreen.route)
+                    }
+            )
+        }
         SearchBar(
             modifier = Modifier.padding(start = 24.dp, end = 24.dp),
             text = "",
@@ -91,7 +109,6 @@ fun HomeScreen(
             onClick = { article ->
                 navigate(Route.DetailScreen.createRoute(article))
             }
-
 
         )
     }

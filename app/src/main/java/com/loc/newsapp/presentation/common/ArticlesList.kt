@@ -3,6 +3,7 @@ package com.loc.newsapp.presentation.common
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -16,9 +17,28 @@ import com.loc.newsapp.presentation.Dimensions.extraSmallPadding2
 
 @Composable
 fun ArticlesList(
-modifier: Modifier = Modifier,
-articles: LazyPagingItems<Article>,
-onClick: (Article) -> Unit
+    modifier: Modifier = Modifier,
+    articles: List<Article>,
+    onClick: (Article) -> Unit
+) {
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(MediumPadding1),
+        contentPadding = PaddingValues(all = extraSmallPadding2)
+    ) {
+        items(count = articles.size) {
+            val article = articles[it]
+            ArticleCard(article = article, onClick = { onClick(article) })
+        }
+    }
+}
+
+
+@Composable
+fun ArticlesList(
+    modifier: Modifier = Modifier,
+    articles: LazyPagingItems<Article>,
+    onClick: (Article) -> Unit
 ) {
     val handlePagingResult = handlePagingResultItems(article = articles)
     if (handlePagingResult) {
@@ -35,6 +55,7 @@ onClick: (Article) -> Unit
         }
     }
 }
+
 @Composable
 fun handlePagingResultItems(
     article: LazyPagingItems<Article>
