@@ -1,6 +1,7 @@
 package com.loc.newsapp.presentation.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -53,13 +54,14 @@ fun HomeScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = MediumPadding1)
+            .padding(top = 0.dp)
             .statusBarsPadding()
+            .background(color = colorResource(id = R.color.gray))
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp),
+                .padding(start = 24.dp, end = 24.dp, top = 24.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(

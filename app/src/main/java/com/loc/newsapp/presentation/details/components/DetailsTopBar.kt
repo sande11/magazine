@@ -52,12 +52,12 @@ fun DetailsTopBar(
                     contentDescription = null
                 )
             }
-            IconButton(onBrowsingClick) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_network),
-                    contentDescription = null
-                )
-            }
+//            IconButton(onBrowsingClick) {
+//                Icon(
+//                    painter = painterResource(id = R.drawable.ic_network),
+//                    contentDescription = null
+//                )
+//            }
         }
     )
 }

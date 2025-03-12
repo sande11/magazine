@@ -2,6 +2,7 @@ package com.loc.newsapp.presentation.details
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -10,15 +11,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.loc.newsapp.R
@@ -40,6 +45,7 @@ fun DetailScreen(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
+            .background(color = colorResource(id = R.color.gray))
     ) {
         DetailsTopBar(
             onBrowsingClick = {
@@ -53,14 +59,14 @@ fun DetailScreen(
 
             onShareClick = {
                 val shareIntent = Intent().also {
-
-                    it.putExtra(Intent.EXTRA_TEXT, article.url)
+                    it.action = Intent.ACTION_SEND
+                    it.putExtra(Intent.EXTRA_TEXT, "${article.title}\n\n${article.url}")
                     it.type = "text/plain"
-                    if (it.resolveActivity(context.packageManager) != null) {
-                        context.startActivity(it)
-                    }
                 }
-
+                val chooser = Intent.createChooser(shareIntent, "Share Article")
+                if (shareIntent.resolveActivity(context.packageManager) != null) {
+                    context.startActivity(chooser)
+                }
             },
             onBookmarkClick = {
                 event(DetailsEvent.UpsertDeleteArticle(article))
@@ -97,11 +103,31 @@ fun DetailScreen(
 
                 Text(
                     text = article.content,
-                    style = MaterialTheme.typography.displaySmall,
+                    style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
                     color = colorResource(
                         R.color.body
                     )
                 )
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Read More Button
+                Button(
+                    onClick = {
+                        Intent(Intent.ACTION_VIEW).also {
+                            it.data = Uri.parse(article.url)
+                            if (it.resolveActivity(context.packageManager) != null) {
+                                context.startActivity(it)
+                            }
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                        containerColor = Color.Black,
+                    )
+                ) {
+                    Text(text = "Read More")
+                }
+
             }
         }
     }

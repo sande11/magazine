@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import com.loc.newsapp.ui.theme.NewsAppTheme
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
@@ -48,7 +49,7 @@ class MainActivity : ComponentActivity() {
 
                     SideEffect {
                         systemController.setSystemBarsColor(
-                            color = Color.Transparent,
+                            color = Color(0xEEEBEBF8),
                             darkIcons = !isSystemInDarkTheme
                         )
                     }

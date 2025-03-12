@@ -7,4 +7,6 @@
     <color name="input_background">#fff</color>
     <color name="placeholder">#A0A3BD</color>
     <color name="shimmer">#C3C3C3</color>
+    <color name="gray_pressed">#EEEEEE</color>
+    <color name="gray_focused">#EEEEEE</color>
 </resources>

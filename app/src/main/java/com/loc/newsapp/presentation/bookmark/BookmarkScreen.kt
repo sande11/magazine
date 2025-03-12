@@ -1,9 +1,11 @@
 package com.loc.newsapp.presentation.bookmark
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -37,12 +39,17 @@ fun BookmarkScreen(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
-            .padding(top = MediumPadding1, start = MediumPadding1, end = MediumPadding1)
+            .background(color = colorResource(id = R.color.gray))
     ) {
-        Row {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp, top = 24.dp),
+
+            ) {
             IconButton(onClick = onBackClick) {
                 Icon(
-                    modifier = Modifier.padding(bottom = 12.dp),
+                    modifier = Modifier.padding(bottom = 12.dp, end = 18.dp),
                     painter = painterResource(id = R.drawable.ic_back_arrow),
                     contentDescription = "Back",
                     tint = MaterialTheme.colorScheme.onBackground
@@ -54,13 +61,15 @@ fun BookmarkScreen(
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Serif,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.height(50.dp)
+                modifier = Modifier
+                    .height(50.dp)
+                    .padding(start = 0.dp)
             )
         }
 
+        Spacer(modifier = Modifier.height(0.dp))
 
-        Spacer(modifier = Modifier.height(MediumPadding1))
-
-        ArticlesList(articles = state.articles, onClick = { navigateToDetails(it) })
+        ArticlesList(modifier = Modifier.padding(horizontal = MediumPadding1), articles = state.articles, onClick = { navigateToDetails(it) })
     }
+
 }
