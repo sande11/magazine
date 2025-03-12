@@ -9,7 +9,7 @@ import com.loc.newsapp.domain.model.Article
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-abstract class NewsDAO {
+interface NewsDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun upsert(article: Article)
 

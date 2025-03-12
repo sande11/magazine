@@ -21,7 +21,7 @@ class DetailsViewModel @Inject constructor(
                 viewModelScope.launch {
                     val article = newsUseCases.selectArticle(event.article.url)
                     if (article == null) {
-                        upsetArticle(event.article)
+                        upsertArticle(event.article)
                     } else {
                         deleteArticle(event.article)
                     }
@@ -38,8 +38,8 @@ class DetailsViewModel @Inject constructor(
         sideEffect.value = "Article deleted"
     }
 
-    private suspend fun upsetArticle(article: Article) {
-        newsUseCases.upsetArticle(article = article)
+    private suspend fun upsertArticle(article: Article) {
+        newsUseCases.upsertArticle(article = article)
         sideEffect.value = "Article saved"
     }
 }

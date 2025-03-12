@@ -14,6 +14,7 @@ import com.loc.newsapp.domain.model.Article
 import com.loc.newsapp.presentation.bookmark.BookmarkScreen
 import com.loc.newsapp.presentation.bookmark.BookmarkViewModel
 import com.loc.newsapp.presentation.details.DetailScreen
+import com.loc.newsapp.presentation.details.DetailsViewModel
 import com.loc.newsapp.presentation.home.HomeScreen
 import com.loc.newsapp.presentation.home.HomeViewModel
 import com.loc.newsapp.presentation.onboarding.OnBoardingViewModel
@@ -45,14 +46,14 @@ fun NavGraph(startDestination: String, navController: NavHostController) {
             }
 
             article?.let {
+                val viewModel: DetailsViewModel = hiltViewModel()
                 DetailScreen(
                     article = it,
-                    event = {}, // Pass any event handler if required
+                    event = { event -> viewModel.onEvent(event) },
                     navigateUp = { navController.popBackStack() }
                 )
             }
         }
-
 
         // Group news-related screens
         navigation(
@@ -72,10 +73,9 @@ fun NavGraph(startDestination: String, navController: NavHostController) {
             BookmarkScreen(
                 state = bookmarkViewModel.state.value,
                 navigateToDetails = { article -> navController.navigate(Route.DetailScreen.createRoute(article)) },
-                onBackClick = { navController.popBackStack() } // Pass the back navigation function
+                onBackClick = { navController.popBackStack() }
             )
         }
     }
-
-    }
+}
 
